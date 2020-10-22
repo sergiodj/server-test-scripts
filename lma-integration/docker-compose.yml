@@ -1,9 +1,8 @@
-version: '2'
+version: '3'
 
 services:
     prometheus:
         image: squeakywheel/prometheus:edge
-        network_mode: "host"
         ports:
             - 9090:9090
         volumes:
@@ -12,13 +11,11 @@ services:
 
     node-exporter:
         image: prom/node-exporter
-        network_mode: "host"
         ports:
             - 9100:9100
 
     telegraf:
         image: squeakywheel/telegraf:edge
-        network_mode: "host"
         ports:
             - 9273:9273
         volumes:
@@ -26,7 +23,6 @@ services:
 
     alertmanager:
         image: squeakywheel/prometheus-alertmanager:edge
-        network_mode: "host"
         ports:
             - 9093:9093
         volumes:
@@ -34,7 +30,6 @@ services:
 
     grafana:
         image: squeakywheel/grafana:edge
-        network_mode: "host"
         ports:
             - 3000:3000
         volumes:
@@ -42,7 +37,6 @@ services:
 
     cortex:
         image: squeakywheel/cortex:edge
-        network_mode: "host"
         ports:
             - 9009:9009
         volumes:
@@ -50,3 +44,9 @@ services:
         command: [
             "-config.file=/etc/cortex/cortex.yaml"
             ]
+
+    tests:
+        image: squeakywheel/lma-integration-tests
+        ports:
+            - 5001:5001
+            - 8080:8080
